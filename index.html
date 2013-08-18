@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Proyecto Nahual - Caras Cruzadas</title>
+        <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+        <script src="js/jquery-2.0.3.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <style>
+            .face-container {
+                border: 1pt solid
+            }
+            .cara {
+                background-repeat: no-repeat;
+                background-size: auto 590px;
+            }
+            .cara1 {
+                background-image: url('Imagenes/cara1.png');
+            }
+            .cara2 {
+                background-image: url('Imagenes/cara2.png');
+            }
+            .cara3 {
+                background-image: url('Imagenes/cara3.png');
+            }
+            .cara4 {
+                background-image: url('Imagenes/cara4.png');
+            }
+            .row-top div {
+                height: 295px;
+            }
+            .cara-top {
+                background-position: 0px 0px;
+            }
+            .row-middle div{
+                height: 75px;
+            }
+            .cara-middle {
+                background-position: 0px -295px;
+            }
+            .row-bottom div{
+                height: 230px;
+            }
+            .cara-bottom {
+                background-position: 0px -370px;
+            }
+            .row-top .btn,.row-middle .btn,.row-bottom .btn {
+                top:33%;
+                position:relative;
+            }
+        </style>
+        <script>
+            function switchClass(object, currentClass, nextClass) {
+                object.removeClass(currentClass);
+                object.addClass(nextClass);
+            }
+            $(document).ready(function () {
+                $('.btn-back').click(function (){
+                    //TODO: resolve the parent with a '.row' selector
+                    var cara = $(this).parent().parent().find('.cara');
+                    //TODO: fix thecode not to switch over the css class
+                    if (cara.hasClass('cara1'))
+                        switchClass(cara, 'cara1', 'cara4');
+                    else if (cara.hasClass('cara2'))
+                        switchClass(cara, 'cara2', 'cara1');
+                    else if (cara.hasClass('cara3'))
+                        switchClass(cara, 'cara3', 'cara2');
+                    else
+                        switchClass(cara, 'cara4', 'cara3');
+                });
+                $('.btn-forward').click(function (){
+                    //TODO: resolve the parent with a '.row' selector
+                    var cara = $(this).parent().parent().find('.cara');
+                    //TODO: fix thecode not to switch over the css class
+                    if (cara.hasClass('cara1'))
+                        switchClass(cara, 'cara1', 'cara2');
+                    else if (cara.hasClass('cara2'))
+                        switchClass(cara, 'cara2', 'cara3');
+                    else if (cara.hasClass('cara3'))
+                        switchClass(cara, 'cara3', 'cara4');
+                    else
+                        switchClass(cara, 'cara4', 'cara1');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Proyecto Nahual - Caras Cruzadas</h1>
+        <div class="row row-top">
+            <div class="span1"><input type="button" class="btn btn-back" value="<" /></div>
+            <div class="span6 cara cara-top cara1"> </div>
+            <div class="span1"><input type="button" class="btn btn-forward" value=">" /></div>
+        </div>   
+        <div class="row row-middle">
+            <div class="span1"><input type="button" class="btn btn-back" value="<" /></div>
+            <div class="span6 cara cara-middle cara1"> </div>
+            <div class="span1"><input type="button" class="btn btn-forward" value=">" /></div>
+        </div>
+        <div class="row row-bottom">
+            <div class="span1"><input type="button" class="btn btn-back" value="<" /></div>
+            <div class="span6 cara cara-bottom cara1"> </div>
+            <div class="span1"><input type="button" class="btn btn-forward" value=">" /></div>
+        </div>
+    </body>
+</html>
