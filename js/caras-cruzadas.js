@@ -1,3 +1,5 @@
+var carasDisponibles = ['cara1', 'cara2', 'cara3', 'cara4'];
+
 function initCarasCruzadas() {
     initImageIndex($('#retrato .cara-top'));
     initImageIndex($('#retrato .cara-middle'));
