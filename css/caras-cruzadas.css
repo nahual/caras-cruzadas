@@ -1,0 +1,128 @@
+.logo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('../Imagenes/Nahual.jpg');
+    display:inline-block;
+    width:50px;
+    height:50px;
+}
+h1 > span {
+    height:50px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 15px;
+    vertical-align: middle;
+}
+h1 {
+    margin-left: 10px;
+    height:50px;
+    color: #ffffff;
+    background-color: rgb(154,170,71);
+}
+h2 {
+    padding-left: 15px;
+    vertical-align: middle;
+    margin-left: 10px;
+    height:50px;
+    color: #ffffff;
+    background-color: rgb(173,218,112);
+}
+.face-retrato {
+    border: 1pt solid
+}
+.cara {
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-size: auto 590px;
+}
+.cara1 {
+    background-image: url('../Imagenes/cara1.png');
+}
+.cara2 {
+    background-image: url('../Imagenes/cara2.png');
+}
+.cara3 {
+    background-image: url('../Imagenes/cara3.png');
+}
+.cara4 {
+    background-image: url('../Imagenes/cara4.png');
+}
+.row-top div {
+    height: 295px;
+}
+.cara-top {
+    background-position: 0px 0px;
+}
+.row-middle div{
+    height: 75px;
+}
+.cara-middle {
+    background-position: 0px -295px;
+}
+.row-bottom div{
+    height: 220px;
+}
+.cara-bottom {
+    background-position: 0px -370px;
+}
+
+#retrato div {
+
+    border-spacing: 0px;
+}
+#retrato {
+    border-width: 10px;
+    border-style: double;
+    border-spacing: 5px;
+    border-radius: 6px;
+    border-color: #A16E20;
+    padding: 15px;
+    /* IE10 Consumer Preview */
+    background-image: -ms-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+    /* Opera */
+    background-image: -o-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, center center, 0, center center, 140, color-stop(0, #FFFFAB), color-stop(2, #EFA330));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+    /* W3C Markup, IE10 Release Preview */
+    background-image: radial-gradient(circle closest-side at center, #FFFFAB 0%, #EFA330 200%);
+}
+.btn-back,.btn-forward {
+    position:relative;
+}
+.row-top .btn-back,.row-top .btn-forward {
+    top:40%;
+}
+.row-middle .btn-back,.row-middle .btn-forward {
+    top:10%;
+}
+.row-bottom .btn-back,.row-bottom .btn-forward {
+    top:40%;
+}
+.btn-back, .btn-forward{
+    width:60px; /*same as the height*/
+    height:60px; /*same as the width*/
+    background-color:#A16E20;
+    border:1px solid #A16E20; /*same colour as the background*/
+    color:#fff;
+    font-size:1.6em;
+    /*set the border-radius at half the size of the width and height*/
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    /*give the button a small drop shadow*/
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0, .75);
+    box-shadow: 2px 2px 15px rgba(0,0,0, .75);
+}
+.btn-back:hover, .btn-forward:hover{
+    background:#A14E10;
+    border:1px solid #A14E10;
+    /*reduce the size of the shadow to give a pushed effect*/
+    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+    -moz-box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+    box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+}
