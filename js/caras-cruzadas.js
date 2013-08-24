@@ -1,42 +1,55 @@
 var carasDisponibles = ['cara1', 'cara2', 'cara3', 'cara4'];
+const VELOCIDAD_TRANSICION = 300;
 
 function initCarasCruzadas() {
-    initImageIndex($('#retrato .cara-top'));
-    initImageIndex($('#retrato .cara-middle'));
-    initImageIndex($('#retrato .cara-bottom'));
 
-    $('#retrato .btn-back').click(function (){
-        //TODO: resolve the parent with a '.row' selector
-        var imageretrato = $(this).parent().parent().find('.cara');
-        moveImageBack(imageretrato);
+    init("top");
+    init("middle");
+    init("bottom");
+
+
+    $(".btn-back").click(function() {
+        var $currentRow = $(this).closest(".row").find(".cara:visible");
+        var currentIndex = $currentRow.data("imageIndex");
+        var nextIndex = currentIndex - 1;
+        if (nextIndex < 0) {
+            nextIndex = carasDisponibles.length - 1;
+        }
+        $currentRow.hide('slide',{direction:'left'},VELOCIDAD_TRANSICION, function() {
+
+            $(this).closest(".row").find("." + carasDisponibles[nextIndex]).show('slide',{direction:'right'}, VELOCIDAD_TRANSICION);
+        });
     });
-    $('#retrato .btn-forward').click(function (){
-        //TODO: resolve the parent with a '.row' selector
-        var imageretrato = $(this).parent().parent().find('.cara');
-        moveImageForward(imageretrato);
+
+    $(".btn-forward").click(function() {
+        var $currentRow = $(this).closest(".row").find(".cara:visible");
+        var currentIndex = $currentRow.data("imageIndex");
+        var nextIndex = currentIndex + 1;
+        if (nextIndex == carasDisponibles.length) {
+            nextIndex = 0;
+        }
+        $currentRow.hide('slide',{direction:'right'},VELOCIDAD_TRANSICION, function() {
+            $(this).closest(".row").find("." + carasDisponibles[nextIndex]).show('slide',{direction:'left'},VELOCIDAD_TRANSICION);
+        });
     });
 }
 
-function switchImageClass(imageretrato, currentClass, nextClass) {
-    imageretrato.removeClass(currentClass);
-    imageretrato.addClass(nextClass);
-}
 
-function initImageIndex(imageretrato) {
+function init(position) {
+    //creamos todos los div de todas las caras
+    for (var i = 0; i < carasDisponibles.length; i++) {
+        var $faceRow = $("<div class='span3 cara cara-"+ position + " " + carasDisponibles[i] + "' > </div>");
+        $faceRow.data("imageIndex", i);
+        $("#row-" + position).find(".span1").first().after($faceRow);
+    }
+    //escondemos todos
+    $("#retrato .row-" + position).find(".cara-" + position).each(function() {
+        $(this).hide();
+    });
+    //mostramos solo el del index
     var index = Math.floor(Math.random() * carasDisponibles.length);
-    imageretrato.data('imageIndex', index);
-    imageretrato.addClass(carasDisponibles[index]);
+    $("#retrato .row-" + position).find("." + carasDisponibles[index]).show();
+
 }
 
-function moveImage(imageretrato, indexDelta) {
-    var currentIndex = imageretrato.data('imageIndex');
-    var nextIndex = (currentIndex + indexDelta) % carasDisponibles.length;
-    imageretrato.data('imageIndex', nextIndex);
-    switchImageClass(imageretrato, carasDisponibles[currentIndex],carasDisponibles[nextIndex]);
-}
-function moveImageBack(imageretrato, indexDelta) {
-    moveImage(imageretrato, -1);
-}
-function moveImageForward(imageretrato, indexDelta) {
-    moveImage(imageretrato, +1);
-}
+
