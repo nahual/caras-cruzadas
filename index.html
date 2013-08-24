@@ -6,10 +6,40 @@
         <script src="js/jquery-2.0.3.min.js"></script>
         <script src="js/bootstrap.js"></script>
         <style>
-            .face-container {
+            .logo {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-image: url('Imagenes/Nahual.jpg');
+                display:inline-block;
+                width:50px;
+                height:50px;
+            }
+            h1 > span {
+                height:50px;
+                margin: 0px;
+                padding: 0px;
+                padding-left: 15px;
+                vertical-align: middle;
+            }
+            h1 {
+                margin-left: 10px;
+                height:50px;
+                color: #ffffff;
+                background-color: rgb(154,170,71);
+            }
+            h2 {
+                padding-left: 15px;
+                vertical-align: middle;
+                margin-left: 10px;
+                height:50px;
+                color: #ffffff;
+                background-color: rgb(173,218,112);            
+            }
+            .face-retrato {
                 border: 1pt solid
             }
             .cara {
+                border-radius: 5px;
                 background-repeat: no-repeat;
                 background-size: auto 590px;
             }
@@ -38,67 +68,137 @@
                 background-position: 0px -295px;
             }
             .row-bottom div{
-                height: 230px;
+                height: 220px;
             }
             .cara-bottom {
                 background-position: 0px -370px;
             }
-            .row-top .btn,.row-middle .btn,.row-bottom .btn {
-                top:33%;
+            
+            #retrato div {
+            
+                border-spacing: 0px;
+            }
+            #retrato {
+                border-width: 10px;
+                border-style: double;
+                border-spacing: 5px;
+                border-radius: 6px;
+                border-color: #A16E20;
+                padding: 15px;
+                /* IE10 Consumer Preview */ 
+                background-image: -ms-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+                /* Mozilla Firefox */ 
+                background-image: -moz-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+                /* Opera */ 
+                background-image: -o-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+                /* Webkit (Safari/Chrome 10) */ 
+                background-image: -webkit-gradient(radial, center center, 0, center center, 140, color-stop(0, #FFFFAB), color-stop(2, #EFA330));
+                /* Webkit (Chrome 11+) */ 
+                background-image: -webkit-radial-gradient(center, circle closest-side, #FFFFAB 0%, #EFA330 200%);
+                /* W3C Markup, IE10 Release Preview */ 
+                background-image: radial-gradient(circle closest-side at center, #FFFFAB 0%, #EFA330 200%);
+            }
+            .btn-back,.btn-forward {
                 position:relative;
             }
+            .row-top .btn-back,.row-top .btn-forward {
+                top:40%;
+            }
+            .row-middle .btn-back,.row-middle .btn-forward {
+                top:10%;
+            }
+            .row-bottom .btn-back,.row-bottom .btn-forward {
+                top:40%;
+            }
+            .btn-back, .btn-forward{
+                width:60px; /*same as the height*/
+                height:60px; /*same as the width*/
+                background-color:#A16E20;
+                border:1px solid #A16E20; /*same colour as the background*/
+                color:#fff;
+                font-size:1.6em;
+                /*set the border-radius at half the size of the width and height*/
+                -webkit-border-radius: 30px;
+                -moz-border-radius: 30px;
+                border-radius: 30px;
+                /*give the button a small drop shadow*/
+                -webkit-box-shadow: 0 0 10px rgba(0,0,0, .75);
+                -moz-box-shadow: 0 0 10px rgba(0,0,0, .75);
+                box-shadow: 2px 2px 15px rgba(0,0,0, .75);
+            }
+            .btn-back:hover, .btn-forward:hover{
+                background:#A14E10;
+                border:1px solid #A14E10;
+                /*reduce the size of the shadow to give a pushed effect*/
+                -webkit-box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+                -moz-box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+                box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+             }
         </style>
         <script>
-            function switchClass(object, currentClass, nextClass) {
-                object.removeClass(currentClass);
-                object.addClass(nextClass);
+            var carasDisponibles = ['cara1', 'cara2', 'cara3', 'cara4'];
+            
+            function switchImageClass(imageretrato, currentClass, nextClass) {
+                imageretrato.removeClass(currentClass);
+                imageretrato.addClass(nextClass);
             }
+            
+            function initImageIndex(imageretrato) {
+                var index = Math.floor(Math.random() * carasDisponibles.length);
+                imageretrato.data('imageIndex', index);
+                imageretrato.addClass(carasDisponibles[index]);
+            }
+            
+            function moveImage(imageretrato, indexDelta) {
+                var currentIndex = imageretrato.data('imageIndex');
+                var nextIndex = (currentIndex + indexDelta) % carasDisponibles.length;
+                imageretrato.data('imageIndex', nextIndex);
+                switchImageClass(imageretrato, carasDisponibles[currentIndex],carasDisponibles[nextIndex]); 
+            }
+            function moveImageBack(imageretrato, indexDelta) {
+                moveImage(imageretrato, -1);
+            }
+            function moveImageForward(imageretrato, indexDelta) {
+                moveImage(imageretrato, +1);
+            }
+            
             $(document).ready(function () {
-                $('.btn-back').click(function (){
+                initImageIndex($('#retrato .cara-top'));
+                initImageIndex($('#retrato .cara-middle'));
+                initImageIndex($('#retrato .cara-bottom'));
+                
+                $('#retrato .btn-back').click(function (){
                     //TODO: resolve the parent with a '.row' selector
-                    var cara = $(this).parent().parent().find('.cara');
-                    //TODO: fix thecode not to switch over the css class
-                    if (cara.hasClass('cara1'))
-                        switchClass(cara, 'cara1', 'cara4');
-                    else if (cara.hasClass('cara2'))
-                        switchClass(cara, 'cara2', 'cara1');
-                    else if (cara.hasClass('cara3'))
-                        switchClass(cara, 'cara3', 'cara2');
-                    else
-                        switchClass(cara, 'cara4', 'cara3');
+                    var imageretrato = $(this).parent().parent().find('.cara');
+                    moveImageBack(imageretrato);
                 });
-                $('.btn-forward').click(function (){
+                $('#retrato .btn-forward').click(function (){
                     //TODO: resolve the parent with a '.row' selector
-                    var cara = $(this).parent().parent().find('.cara');
-                    //TODO: fix thecode not to switch over the css class
-                    if (cara.hasClass('cara1'))
-                        switchClass(cara, 'cara1', 'cara2');
-                    else if (cara.hasClass('cara2'))
-                        switchClass(cara, 'cara2', 'cara3');
-                    else if (cara.hasClass('cara3'))
-                        switchClass(cara, 'cara3', 'cara4');
-                    else
-                        switchClass(cara, 'cara4', 'cara1');
+                    var imageretrato = $(this).parent().parent().find('.cara');
+                    moveImageForward(imageretrato);
                 });
             });
         </script>
     </head>
     <body>
-        <h1>Proyecto Nahual - Caras Cruzadas</h1>
-        <div class="row row-top">
-            <div class="span1"><input type="button" class="btn btn-back" value="<" /></div>
-            <div class="span6 cara cara-top cara1"> </div>
-            <div class="span1"><input type="button" class="btn btn-forward" value=">" /></div>
-        </div>   
-        <div class="row row-middle">
-            <div class="span1"><input type="button" class="btn btn-back" value="<" /></div>
-            <div class="span6 cara cara-middle cara1"> </div>
-            <div class="span1"><input type="button" class="btn btn-forward" value=">" /></div>
-        </div>
-        <div class="row row-bottom">
-            <div class="span1"><input type="button" class="btn btn-back" value="<" /></div>
-            <div class="span6 cara cara-bottom cara1"> </div>
-            <div class="span1"><input type="button" class="btn btn-forward" value=">" /></div>
+        <h1><span class="logo"></span><span>Proyecto Nahual</span></h1>
+        <h2>Caras Cruzadas</h2>
+        <div id="retrato" class="span5">
+            <div class="row row-top">
+                <div class="span1"><input type="button" class="btn-back" value="<" /></div>
+                <div class="span3 cara cara-top"> </div>
+                <div class="span1"><input type="button" class="btn-forward" value=">" /></div>
+            </div>   
+            <div class="row row-middle">
+                <div class="span1"><input type="button" class="btn-back" value="<" /></div>
+                <div class="span3 cara cara-middle"> </div>
+                <div class="span1"><input type="button" class="btn-forward" value=">" /></div>
+            </div>
+            <div class="row row-bottom">
+                <div class="span1"><input type="button" class="btn-back" value="<" /></div>
+                <div class="span3 cara cara-bottom"> </div>
+                <div class="span1"><input type="button" class="btn-forward" value=">" /></div>
+            </div>
         </div>
     </body>
 </html>
