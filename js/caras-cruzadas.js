@@ -16,8 +16,9 @@ function initCarasCruzadas() {
             nextIndex = carasDisponibles.length - 1;
         }
         $currentRow.hide('slide',{direction:'left'},VELOCIDAD_TRANSICION, function() {
-
-            $(this).closest(".row").find("." + carasDisponibles[nextIndex]).show('slide',{direction:'right'}, VELOCIDAD_TRANSICION);
+            $(this).closest(".row").find("." + carasDisponibles[nextIndex]).show('slide',{direction:'right'}, VELOCIDAD_TRANSICION, function() {
+                checkJackpot();
+            });
         });
     });
 
@@ -29,7 +30,9 @@ function initCarasCruzadas() {
             nextIndex = 0;
         }
         $currentRow.hide('slide',{direction:'right'},VELOCIDAD_TRANSICION, function() {
-            $(this).closest(".row").find("." + carasDisponibles[nextIndex]).show('slide',{direction:'left'},VELOCIDAD_TRANSICION);
+            $(this).closest(".row").find("." + carasDisponibles[nextIndex]).show('slide',{direction:'left'},VELOCIDAD_TRANSICION, function() {
+                checkJackpot();
+            });
         });
     });
 }
@@ -49,7 +52,31 @@ function init(position) {
     //mostramos solo el del index
     var index = Math.floor(Math.random() * carasDisponibles.length);
     $("#retrato .row-" + position).find("." + carasDisponibles[index]).show();
-
 }
 
 
+//en cada cambio, chequea si se formó una cara, en ese caso,  cambia un color
+function checkJackpot() {
+    var distinto = false;
+    var indexes = [];
+    var $currentRow = $("#retrato").find(".row").each(function() {
+        var $currentRow = $(this).find(".cara:visible");
+        var currentIndex = $currentRow.data("imageIndex");
+        indexes.push(currentIndex);
+    });
+    for (var i = 0; i < indexes.length - 1; i++) {
+        if (indexes[i] != indexes[i+1]) {
+            undoJackpot();
+            return false;
+        }
+    }
+    doJackpot();
+}
+
+function doJackpot() {
+    $("#retrato").addClass("jackpot");
+}
+
+function undoJackpot() {
+    $("#retrato").removeClass("jackpot");
+}
